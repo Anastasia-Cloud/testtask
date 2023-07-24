@@ -1,0 +1,30 @@
+CREATE TABLE SKU
+(
+    ID INTEGER UNIQUE PRIMARY KEY,
+    Name TEXT
+);
+
+ALTER TABLE SKU
+ADD COIUMN Code REAL AS (
+  's' || ID
+);
+
+CREATE TABLE Family
+(
+    ID INTEGER UNIQUE PRIMARY KEY,
+    SurName TEXT,
+    BudgetValue INTEGER
+);
+
+CREATE TABLE Basket
+(
+    ID INTEGER UNIQUE PRIMARY KEY,
+    ID_SKU INTEGER,
+    ID_Family INTEGER,
+    Quantity INTEGER CHECK(Quantity >= 0),
+    Value INTEGER CHECK(Value >= 0),
+    PurchaseDate TEXT DEFAULT (date('now')),
+    DiscountValue INTEGER,
+    FOREIGN KEY (ID_SKU)  REFERENCES SKU (ID),
+    FOREIGN KEY (ID_Family)  REFERENCES Family (ID)
+);
